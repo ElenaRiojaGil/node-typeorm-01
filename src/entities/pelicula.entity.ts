@@ -1,30 +1,51 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Genero } from './genero.entity'; // Asegúrate de que esta entidad exista y esté importada correctamente
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Genero } from './genero.entity';
+import { Favoritos } from './favoritos.entity';
 
-@Entity('peliculas1')
-export class Pelicula {
-  @PrimaryGeneratedColumn()
+@Entity('peliculas') // Nombre de la tabla en la base de datos
+export class Peliculas {
+  @PrimaryGeneratedColumn() // Clave primaria autogenerada (integer)
   id: number;
 
-  @Column({ length: 100 })
+  @Column({ type: 'varchar', length: 100, nullable: false }) // Columna de texto con longitud máxima de 100 caracteres
   titulo: string;
 
-  @Column('text', { nullable: true })
+  @Column({ type: 'text', nullable: true }) // Columna de texto opcional (para la descripción)
   descripcion: string;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ type: 'int', nullable: true }) // Columna opcional para el año
   anio: number;
 
-  @ManyToOne(() => Genero, genero => genero.peliculas, { onDelete: 'RESTRICT' })
-  @JoinColumn({ name: 'genero_id' })
-  genero: Genero;
-
-  @Column({ length: 255, nullable: true })
+  @Column({ type: 'varchar', length: 255, nullable: true }) // Columna opcional para la URL de la imagen
   imagen_url: string;
 
-  @ManyToOne(() => Genero, (genero) => genero.peliculas, { 
-    nullable: false, onDelete: 'RESTRICT' }) // Relación muchos-a-uno
+  @ManyToOne(() => Genero, (genero) => genero.peliculas, {
+    nullable: false,
+    onDelete: 'RESTRICT',
+  }) // Relación muchos-a-uno
   @JoinColumn({ name: 'genero_id' }) // Define el nombre de la columna FK
-  generos: Genero;
+  genero: Genero;
 
+  @OneToMany(() => Favoritos, (favoritos) => favoritos.peliculas)
+  favoritos: Favoritos[];
 }
+
+/*
+┌───────────────┐                ┌───────────────────────┐
+│   Genero1     │  1          N  │     Peliculas1        │
+├───────────────┤◄──────────────►│ id (PK)               │
+│ id (PK)       │                │ titulo                │
+│ titulo        │                │ descripcion           │
+└───────────────┘                │ anio                  │
+                                 │ genero_id (FK)        │
+                                 │ imagen_url            │
+                                 └───────────────────────┘
+
+*/

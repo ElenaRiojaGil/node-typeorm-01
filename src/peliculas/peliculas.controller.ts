@@ -1,13 +1,17 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PeliculasService } from './peliculas.service';
-import { Pelicula } from 'src/entities/pelicula.entity';
+import { Peliculas } from 'src/entities/pelicula.entity';
 
 @Controller('peliculas')
 export class PeliculasController {
-    constructor(private readonly peliculaService: PeliculasService){}
+  constructor(private readonly peliculaService: PeliculasService) {}
+  @Get()
+  async obtenerPeliculas() {
+    return this.peliculaService.findAll();
+  }
 
-    @Post()
-    async createPelicula(@Body() peli: Partial<Pelicula>): Promise<Pelicula>{
-        return this.peliculaService.create(peli);
-    }
+  @Post()
+  async createPelicula(@Body() peli: Partial<Peliculas>): Promise<Peliculas> {
+    return this.peliculaService.create(peli);
+  }
 }

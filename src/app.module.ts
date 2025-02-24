@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
+import config from './config/config';
 import { validationSchema } from './config/validate';
 import { PeliculasModule } from './peliculas/peliculas.module';
 import { GenerosModule } from './generos/generos.module';
-import config from './config/config';
+import { FavoritosModule } from './favoritos/favoritos.module';
 
 @Module({
   // Nombre de archivo de variables
@@ -21,11 +22,11 @@ import config from './config/config';
       isGlobal: true,
       validationSchema,
     }),
-   PeliculasModule,
-   DatabaseModule,
-   GenerosModule,
-],
-
+    PeliculasModule,
+    DatabaseModule,
+    GenerosModule,
+    FavoritosModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
