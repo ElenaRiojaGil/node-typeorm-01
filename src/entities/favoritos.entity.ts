@@ -10,13 +10,13 @@ export class Favoritos {
 
   @ManyToOne(() => Usuario, (usuario) => usuario.favoritos, {
     onDelete: 'RESTRICT',
-    eager: true,
+    eager: true, // Carga ansiosa para evitar N+1
   })
   usuario: Usuario;
 
   @ManyToOne(() => Peliculas, (peliculas) => peliculas.favoritos, {
-    onDelete: 'RESTRICT',
-    eager: true,
+    onDelete: 'RESTRICT', // Restricción de clave foránea
+    eager: true, // Carga ansiosa para evitar N+1
   })
   peliculas: Peliculas;
 }
