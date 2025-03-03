@@ -40,9 +40,10 @@ export class Peliculas {
 /*
 ┌───────────────┐                ┌───────────────────────┐
 │   Genero1     │  1          N  │     Peliculas1        │
-├───────────────┤◄──────────────►│ id (PK)               │
-│ id (PK)       │                │ titulo                │
-│ titulo        │                │ descripcion           │
+├───────────────┤◄──────────────►├───────────────────────┤
+| id (PK)       |                |  id (PK)              │
+│ titulo        │                │ titulo                │
+│               │                │ descripcion           │
 └───────────────┘                │ anio                  │
                                  │ genero_id (FK)        │
                                  │ imagen_url            │
